@@ -16,5 +16,6 @@ module.exports = (sequelize, DataTypes) => {
 
   Notice.associate = function(models) {
   }
+
   return Notice
 }

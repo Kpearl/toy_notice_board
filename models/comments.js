@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      bbs_id: DataTypes.INTEGER,
+      boards_id: DataTypes.INTEGER,
       comment: DataTypes.STRING,
       name: DataTypes.STRING,
       parent_id: DataTypes.INTEGER,
@@ -22,5 +22,6 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'parent_id',
         sourceKey: 'id'
       })}
+
   return Comment
 }

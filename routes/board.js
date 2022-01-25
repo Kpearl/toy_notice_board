@@ -1,23 +1,24 @@
 var express = require('express');
 var router = express.Router();
 
-const bbsService = require('../services/bbs')
+const boardService = require('../services/board')
+const commentService = require('../services/comment')
 const { getPaging } = require('../utils/paging')
 
-class Bbs {
+class Board {
   constructor() {
-    router.get('/', this.searchBbs) // 제목 & 작성자 검색
-    router.get('/:id', this.getBbs) // 게시물 보기
-    router.post('/', this.insertBbs) // 게시물 등록
-    router.put('/:id', this.updateBbs) // 게시물 수정
-    router.post('/:id', this.deleteBbs) // 게시물 삭제
+    router.get('/', this.searchBoard) // 제목 & 작성자 검색
+    router.get('/:id', this.getBoard) // 게시물 보기
+    router.post('/', this.insertBoard) // 게시물 등록
+    router.put('/:id', this.updateBoard) // 게시물 수정
+    router.post('/:id', this.deleteBoard) // 게시물 삭제
   }
 
-  async searchBbs(req, res) {
+  async searchBoard(req, res) {
     try {
       const paging = getPaging(req)
-      const keyword = req.params.keyword
-      const result = await bbsService.searchBbs(keyword, paging)
+      const keyword = req.query.keyword
+      const result = await boardService.searchBoard(keyword, paging)
       return res.json(result)
       if (!!result) return res.json('관련 게시물이 없습니다.')
     } catch(e) {
@@ -25,11 +26,11 @@ class Bbs {
     }
   }
 
-  async getBbs(req, res) {
+  async getBoard(req, res) {
     try {
       const id = req.params.id
       if (id) {
-        const result = await bbsService.getBbs(id)
+        const result = await boardService.getBoard(id)
         return res.json(result ? result : '해당 게시물이 없습니다.')
       }
       return res.json('해당 게시물이 없습니다.')
@@ -39,7 +40,7 @@ class Bbs {
     }
   }
 
-  async insertBbs(req, res) {
+  async insertBoard(req, res) {
     try {
       const body = req.body
       if (body) {
@@ -49,7 +50,7 @@ class Bbs {
           name: body.name,
           password: body.password
         }
-        const result = await bbsService.insertBbs(body)
+        const result = await boardService.insertBoard(body)
         return res.json(result)
       }
       return res.json('입력 내용을 확인하세요.')
@@ -59,14 +60,14 @@ class Bbs {
     }
   }
 
-  async updateBbs(req, res) {
+  async updateBoard(req, res) {
     try {
       const id = req.params.id
       const body = req.body
       if (id && body) {
-        const getBbs = await bbsService.getBbs(id)
-        if (!getBbs) return res.json('존재하지 않는 게시물 입니다.')
-        const check = await bbsService.checkPassword(id, body.password)
+        const getBoard = await boardService.getBoard(id)
+        if (!getBoard) return res.json('존재하지 않는 게시물 입니다.')
+        const check = await boardService.checkPassword(id, body.password)
         if (!check) return res.json('비밀번호를 확인하세요.')
         const filter = {
           title: body.title,
@@ -75,7 +76,7 @@ class Bbs {
           password: body.password,
           updated_at: new Date()
         }
-        const result = await bbsService.updateBbs(id, filter)
+        const result = await boardService.updateBoard(id, filter)
         return res.json('수정이 완료되었습니다.')
       }
       return res.json('입력 내용을 확인하세요.')
@@ -85,16 +86,17 @@ class Bbs {
     }
   }
 
-  async deleteBbs (req, res) {
+  async deleteBoard (req, res) {
     const id = req.params.id
     const password = req.body && req.body.password
     try {
       if (id && password) {
-        const getBbs = await bbsService.getBbs(id)
-        if (!getBbs) return res.json('존재하지 않는 게시물 입니다.')
-        const check = await bbsService.checkPassword(id, password)
+        const getBoard = await boardService.getBoard(id)
+        if (!getBoard) return res.json('존재하지 않는 게시물 입니다.')
+        const check = await boardService.checkPassword(id, password)
         if (!check) return res.json('비밀번호를 확인하세요.')
-        await bbsService.deleteBbs(id)
+        await boardService.deleteBoard(id)
+        await commentService.deleteComment(id)
         return res.json('삭제가 완료되었습니다.')
       }
       return res.json('입력 내용을 확인하세요.')
@@ -104,6 +106,6 @@ class Bbs {
   }
 }
 
-new Bbs()
+new Board()
 
 module.exports = router;

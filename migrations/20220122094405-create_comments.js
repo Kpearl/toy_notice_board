@@ -1,17 +1,17 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('bbs', {
+    await queryInterface.createTable('comments', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      title: {
+      boards_id: {
         allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
       },
-      contents: {
+      comment: {
         allowNull: false,
         type: Sequelize.STRING,
       },
@@ -19,16 +19,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      password: {
-        allowNull: false,
-        type: Sequelize.STRING,
+      parent_id: {
+        allowNull: true,
+        type: Sequelize.INTEGER,
       },
       created_at: {
-        allowNull: false,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-        type: Sequelize.DATE
-      },
-      updated_at: {
         allowNull: false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
         type: Sequelize.DATE
@@ -36,6 +31,6 @@ module.exports = {
     })
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('bbs')
+    await queryInterface.dropTable('comments')
   },
 }

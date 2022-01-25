@@ -1,7 +1,7 @@
-const tableName = 'bbs'
+const tableName = 'boards'
 
 module.exports = (sequelize, DataTypes) => {
-  const Bbs = sequelize.define(tableName,
+  const Board = sequelize.define(tableName,
     {
       id: {
         allowNull: false,
@@ -17,7 +17,8 @@ module.exports = (sequelize, DataTypes) => {
       updated_at: DataTypes.DATE
     }, {})
 
-  Bbs.associate = function(models) {
+  Board.associate = function(models) {
+
   }
-  return Bbs
+  return Board
 }

@@ -5,13 +5,13 @@ const models = require('../models')
 class commentService {
   async getComments (id) {
     const result = await models.comments.findAll({
-      where: { bbs_id: id, parent_id: null },
-      attributes: ['id', 'bbs_id', 'comment', 'name', 'parent_id', 'created_at'],
+      where: { boards_id: id, parent_id: null },
+      attributes: ['id', 'comment', 'name', 'created_at'],
       include:[{
         model: models.comments,
         as: 'childComment',
         require: false,
-        attributes: ['id', 'bbs_id', 'comment', 'name', 'parent_id', 'created_at'],
+        attributes: ['id', 'comment', 'name', 'created_at'],
       }]
     })
     return result
@@ -19,6 +19,11 @@ class commentService {
 
   async insertComment (filter) {
     const result = await models.comments.create(filter)
+    return result
+  }
+
+  async deleteComment (id) {
+    const result = await models.comments.destroy({ where: { boards_id: id }})
     return result
   }
 }
