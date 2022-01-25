@@ -7,7 +7,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      comment: {
+      bbs_id: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+      },
+      comment_id: {
         allowNull: false,
         type: Sequelize.STRING,
       },

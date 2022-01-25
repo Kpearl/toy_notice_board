@@ -5,16 +5,24 @@ const commentService = require('../services/comment')
 
 class Comment {
   constructor() {
-    router.get('/', this.getComment)
+    router.get('/:bbsId', this.getComment)
     router.post('/', this.insertComment)
   }
 
-  async getComment() {
-    const result = await commentService.getComment()
-    return result
+  async getComment(req, res) {
+    try {
+      const bbsId = req.params.bbsId
+      if (bbsId) {
+        const result = await commentService.getComment(bbsId)
+        return result
+      }
+      return res.json([])
+    } catch (e) {
+      return res.json('Error getComment: ', e)
+    }
   }
 
-  async insertComment() {
+  async insertComment(req, res) {
     const result = await commentService.insertComment()
     return result
   }

@@ -4,7 +4,7 @@ const models = require('../models')
 
 class commentService {
   async getComment (id) {
-    const result = await models.comments.findOne({ where: { id: id }})
+    const result = await models.comments.find({ where: { id: id }})
     return result
   }
 

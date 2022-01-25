@@ -11,3 +11,13 @@ npx sequelize db:migrate
 
 ### ERD
 ![erd](./image/erd.png)
+
+### 구현 및 작성 목록
+- DB 스키마 생성 스크립트 ```migrations```
+- 게시글 목록 API ```(GET) /api/bbs?page={page}&size={size}&keyword={keyword}```
+- 게시글 작성 API  ```(POST) /api/bbs```
+- 게시글 수정 API ```(PUT) /api/bbs/:bbsId```
+- 게시글 삭제 API ```(POST) /api/bbs/:bbsId```
+- 댓글 목록 API ```(GET) /api/comments/:bbsId```
+- 댓글 작성 API ```(POST) /api/comments/:bbsId```
+- 게시물 또는 댓글 등록시 알림 기능 구현 ```(POST) /api/notices```
