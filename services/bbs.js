@@ -3,10 +3,10 @@ const _ = require('lodash')
 const models = require('../models')
 
 class bbsService {
-  async searchBbs (keyword) {
+  async searchBbs (keyword, paging) {
     let filter = {}
     if (keyword) filter = { where: {[Op.or]: [{ title: keyword }, { name: keyword }] }}
-    const result = await models.bbs.findAll(filter)
+    const result = models.bbs.findAll(filter, paging)
     return result
   }
 
