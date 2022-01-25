@@ -1,5 +1,5 @@
 const _ = require('lodash')
-const { Op } = require("sequelize");
+const { Op } = require("sequelize")
 
 const models = require('../models')
 
@@ -9,7 +9,8 @@ class boardService {
     const result = models.boards.findAll({
       attributes: [ 'id', 'title', 'contents', 'name', 'created_at', 'updated_at'],
       where: filter,
-      paging
+      limit: paging.size,
+      offset: paging.offset
     })
     return result
   }
