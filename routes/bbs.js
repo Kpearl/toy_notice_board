@@ -97,7 +97,7 @@ class Bbs {
       }
       return res.json('입력 내용을 확인하세요.')
     } catch (e) {
-      return res.json('입력 내용을 확인하세요.')
+      return res.json('Error deleteBbs: ', e)
     }
   }
 }

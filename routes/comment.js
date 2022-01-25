@@ -22,9 +22,17 @@ class Comment {
     }
   }
 
-  async insertComment(req, res) {
-    const result = await commentService.insertComment()
-    return result
+  async insertComment (req, res) {
+    try {
+      const filter = {
+        name: req.body.name,
+        comment: req.body.comment
+      }
+      const result = await commentService.insertComment()
+      return res.status(200)
+    }
+  } catch (e) {
+    return res.json('Error insertComment: ', e)
   }
 }
 

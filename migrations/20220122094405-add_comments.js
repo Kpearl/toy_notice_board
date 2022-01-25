@@ -11,7 +11,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER,
       },
-      comment_id: {
+      comment: {
         allowNull: false,
         type: Sequelize.STRING,
       },
