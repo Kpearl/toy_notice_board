@@ -1,38 +1,40 @@
-var express = require('express');
-var router = express.Router();
+var express = require('express')
+var router = express.Router()
 
 const commentService = require('../services/comment')
 
 class Comment {
-  constructor() {
-    router.get('/:bbsId', this.getComment)
-    router.post('/', this.insertComment)
+  constructor () {
+    router.get('/:bbsId', this.getComments)
+    router.post('/:bbsId', this.insertComment)
   }
 
-  async getComment(req, res) {
+  async getComments (req, res) {
     try {
       const bbsId = req.params.bbsId
       if (bbsId) {
-        const result = await commentService.getComment(bbsId)
-        return result
+        const result = await commentService.getComments(bbsId)
+        return res.json(result)
       }
-      return res.json([])
+      return res.json('입력 내용을 확인하세요.')
     } catch (e) {
-      return res.json('Error getComment: ', e)
+      return res.json(e)
     }
   }
 
   async insertComment (req, res) {
     try {
       const filter = {
+        bbs_id: req.params.bbsId,
         name: req.body.name,
-        comment: req.body.comment
+        comment: req.body.comment,
+        parent_id: req.body.parentId
       }
-      const result = await commentService.insertComment()
-      return res.status(200)
+      const result = await commentService.insertComment(filter)
+      return res.json(result)
+    } catch (e) {
+      return res.json(e)
     }
-  } catch (e) {
-    return res.json('Error insertComment: ', e)
   }
 }
 

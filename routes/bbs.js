@@ -21,7 +21,7 @@ class Bbs {
       return res.json(result)
       if (!!result) return res.json('관련 게시물이 없습니다.')
     } catch(e) {
-      return res.json('Error searchBbs: ', e)
+      return res.json(e)
     }
   }
 
@@ -35,7 +35,7 @@ class Bbs {
       return res.json('해당 게시물이 없습니다.')
     } catch(e) {
       console.log(e)
-      return res.json('Error getBbs: ', e)
+      return res.json(e)
     }
   }
 
@@ -54,7 +54,7 @@ class Bbs {
       return res.json('입력 내용을 확인하세요.')
     } catch(e) {
       console.log(e)
-      return res.json('Error insertBbs: ', e)
+      return res.json(e)
     }
   }
 
@@ -79,7 +79,7 @@ class Bbs {
       return res.json('입력 내용을 확인하세요.')
     } catch(e) {
       console.log(e)
-      return res.json('Error updateBbs: ', e)
+      return res.json(e)
     }
   }
 
@@ -97,7 +97,7 @@ class Bbs {
       }
       return res.json('입력 내용을 확인하세요.')
     } catch (e) {
-      return res.json('Error deleteBbs: ', e)
+      return res.json(e)
     }
   }
 }

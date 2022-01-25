@@ -1,7 +1,7 @@
-const tableName = 'notices'
+const tableName = 'comments'
 
 module.exports = (sequelize, DataTypes) => {
-  const Notice = sequelize.define(tableName,
+  const Comment = sequelize.define(tableName,
     {
       id: {
         allowNull: false,
@@ -9,13 +9,18 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
+      bbs_id: DataTypes.INTEGER,
       comment: DataTypes.STRING,
       name: DataTypes.STRING,
       parent_id: DataTypes.INTEGER,
       created_at: DataTypes.DATE
     }, {})
 
-  Notice.associate = function(models) {
-  }
-  return Notice
+  Comment.associate = function(models) {
+    models.comments.hasMany(models.comments,
+      { as: 'childComment',
+        foreignKey: 'parent_id',
+        sourceKey: 'id'
+      })}
+  return Comment
 }
