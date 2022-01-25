@@ -17,8 +17,8 @@ module.exports = (sequelize, DataTypes) => {
     }, {})
 
   Comment.associate = function(models) {
-    models.comments.hasMany(models.comments,
-      { as: 'childComment',
+    models.comments.hasMany(models.comments, {
+        as: 'childComment',
         foreignKey: 'parent_id',
         sourceKey: 'id'
       })}

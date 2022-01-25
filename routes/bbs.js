@@ -45,6 +45,7 @@ class Bbs {
       if (body) {
         const filter = {
           title: body.title,
+          contents: body.contents,
           name: body.name,
           password: body.password
         }
@@ -70,6 +71,7 @@ class Bbs {
         const filter = {
           title: body.title,
           name: body.name,
+          contents: body.contents,
           password: body.password,
           updated_at: new Date()
         }

@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
       },
       title: DataTypes.STRING,
+      contents: DataTypes.STRING,
       name: DataTypes.STRING,
       password: DataTypes.STRING,
       created_at: DataTypes.DATE,
