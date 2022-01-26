@@ -20,4 +20,4 @@ npx sequelize db:migrate
 - 게시글 삭제 API ```(POST) /api/board/:boardId```
 - 댓글 목록 API ```(GET) /api/comments/:boardId```
 - 댓글 작성 API ```(POST) /api/comments/:boardId```
-- 게시물 또는 댓글 등록시 알림 기능 구현 ```(POST) /api/notices```
+- 게시물 또는 댓글 등록시 알림 기능 구현 ```notices```

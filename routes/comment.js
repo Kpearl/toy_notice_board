@@ -2,6 +2,7 @@ var express = require('express')
 var router = express.Router()
 
 const commentService = require('../services/comment')
+const noticeService = require('../services/notice')
 
 class Comment {
   constructor () {
@@ -30,6 +31,8 @@ class Comment {
         comment: req.body.comment,
         parent_id: req.body.parentId
       }
+      const keywoard = Array.from(new Set(filter.comment.split(' ')))
+      await noticeService.pushNotice(keywoard, 'comment')
       const result = await commentService.insertComment(filter)
       return res.json(result)
     } catch (e) {

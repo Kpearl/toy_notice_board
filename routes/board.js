@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const boardService = require('../services/board')
+const noticeService = require('../services/notice')
 const commentService = require('../services/comment')
 const { getPaging } = require('../utils/paging')
 
@@ -50,6 +51,8 @@ class Board {
           name: body.name,
           password: body.password
         }
+        const keywoard = Array.from(new Set(filter.contents.split(' ')))
+        await noticeService.pushNotice(keywoard, 'board')
         const result = await boardService.insertBoard(body)
         return res.json(result)
       }
