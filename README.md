@@ -13,7 +13,6 @@ npx sequelize db:migrate
 ![erd](./image/erd.png)
 
 ### 구현 및 작성 목록
-- DB 스키마 생성 스크립트 ```migrations```
 - 게시글 목록 API ```(GET) /api/board?page={page}&size={size}&keyword={keyword}```
 - 게시글 작성 API  ```(POST) /api/board```
 - 게시글 수정 API ```(PUT) /api/board/:boardId```
