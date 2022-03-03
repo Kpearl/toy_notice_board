@@ -1,5 +1,8 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const { validationCheck } = require('../middlewares/validator')
+const { body } = require('express-validator')
+
 
 const boardService = require('../services/board')
 const noticeService = require('../services/notice')
@@ -10,9 +13,18 @@ class Board {
   constructor() {
     router.get('/', this.searchBoard) // 제목 & 작성자 검색
     router.get('/:id', this.getBoard) // 게시물 보기
-    router.post('/', this.insertBoard) // 게시물 등록
+    router.post('/', [
+      body('title').exists(),
+      body('contents').exists(),
+      body('name').exists(),
+      body('password').exists(),
+      validationCheck]
+      ,this.insertBoard) // 게시물 등록
     router.put('/:id', this.updateBoard) // 게시물 수정
-    router.post('/:id', this.deleteBoard) // 게시물 삭제
+    router.post('/:id', [
+      body('password').exists(),
+      validationCheck],
+      this.deleteBoard) // 게시물 삭제
   }
 
   async searchBoard(req, res) {
