@@ -1,8 +1,18 @@
 var express = require('express')
 var router = express.Router()
 
+const Joi = require('Joi')
+const validator = require('express-joi-validation').createValidator({})
+
 const commentService = require('../services/comment')
 const noticeService = require('../services/notice')
+
+const schema = Joi.object({
+  boards_id: Joi.number(),
+  name: Joi.string(),
+  comment: Joi.string(),
+  parent_id: Joi.number()
+})
 
 class Comment {
   constructor () {
@@ -25,12 +35,6 @@ class Comment {
 
   async insertComment (req, res) {
     try {
-      const filter = {
-        boards_id: req.params.boardId,
-        name: req.body.name,
-        comment: req.body.comment,
-        parent_id: req.body.parentId
-      }
       const keywoard = Array.from(new Set(filter.comment.split(' ')))
       await noticeService.pushNotice(keywoard, 'comment')
       const result = await commentService.insertComment(filter)
