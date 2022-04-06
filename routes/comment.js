@@ -17,7 +17,7 @@ const schema = Joi.object({
 class Comment {
   constructor () {
     router.get('/:boardId', this.getComments)
-    router.post('/:boardId', this.insertComment)
+    router.post('/:boardId', validator.body(schema), this.insertComment)
   }
 
   async getComments (req, res) {
